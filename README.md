@@ -5,8 +5,7 @@ Model EXplorer
 you have some data organized in key-values (think of a dataframe)
 and this provides the possibility to 
 - create all the possible models
-- sort them by any result criteria
-- filter unwanted model according to a given predicate
+- filter them by input / result criteria
 
 
 ## Example
