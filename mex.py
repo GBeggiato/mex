@@ -30,12 +30,12 @@ def estimate_models(
     filtermodels : ty.Optional[Predicate] = None
 ) -> Gen[T]:
     """
-    * y: data[y] is the y data points
-    * xs: data[xs] is the xs data points
-    * data: the actual data container, usually a dataframe or similar
-    * modelf: a function that takes data[y] and data[xs] data points and returns an estimation
-    * filterxs: optional predicate to filter out unwanted model combinations
-    * filtermodels: optional predicate to filter out models after estimation
+    * y            : data[y] is the y data points
+    * xs           : data[xs] is the xs data points
+    * data         : the actual data container, usually a dataframe or similar
+    * modelf       : a function that takes data[y] and data[xs] data points and returns an estimation
+    * filterxs     : optional predicate to filter out unwanted model combinations
+    * filtermodels : optional predicate to filter out models after estimation
     """
     fxs     = _true if filterxs     is None else filterxs
     fmodels = _true if filtermodels is None else filtermodels
