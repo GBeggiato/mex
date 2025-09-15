@@ -17,10 +17,6 @@ def sigma_algebra(it: list[T]) -> Gen[list[T]]:
         yield from map(list, itertools.combinations(it, i))
 
 
-def _true(_: ty.Any) -> bool:
-    return True
-
-
 def estimate_models(
     y            : str,
     xs           : list[str],
@@ -34,17 +30,15 @@ def estimate_models(
     * xs           : data[xs] is the xs data points
     * data         : the actual data container, usually a dataframe or similar
     * modelf       : a function that takes data[y] and data[xs] data points and returns an estimation
-    * filterxs     : optional predicate to filter out unwanted model combinations
+    * filterxs     : optional predicate to filter out unwanted regressors combinations
     * filtermodels : optional predicate to filter out models after estimation
     """
-    fxs     = _true if filterxs     is None else filterxs
-    fmodels = _true if filtermodels is None else filtermodels
+    pool = sigma_algebra(xs)
+    if filterxs is not None:
+        pool = filter(filterxs, pool)
     y_data = data[y]
-    for x in sigma_algebra(xs):
-        if not fxs(x):
-            continue
-        model = modelf(y_data, data[x])
-        if not fmodels(model):
-            continue
-        yield model
+    pool = (modelf(y_data, data[x]) for x in pool)
+    if filtermodels is not None:
+        pool = filter(filtermodels, pool)
+    yield from pool
 
